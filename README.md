@@ -2,6 +2,12 @@
 
 AWS Lambda APIG proxy integration helper to send an HTTP response.
 
+- [Installation](#installation)
+- [API](#api)
+- [Usage](#usage)
+- [Examples](#examples)
+- [Publish](#publish)
+
 ## Installation
 
 ```
@@ -62,7 +68,7 @@ const sendRes = createResHandler();
 sendRes.json(201, { hello: 'world' });
 ```
 
-## Example
+## Examples
 
 ```js
 'use strict';
@@ -99,3 +105,18 @@ module.exports.sendData = async event => {
   }
 };
 ```
+
+## Publish
+
+For now we publish manually using:
+
+```
+npm publish --access public
+```
+
+Make sure:
+
+- You increment the npm version after you make code changes with `npm version`.
+- You're logged in.
+
+More information can be found [here](https://docs.npmjs.com/creating-and-publishing-an-org-scoped-package).
