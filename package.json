@@ -1,0 +1,41 @@
+{
+  "name": "@mooncake-dev/lambda-res-handler",
+  "version": "1.0.0",
+  "description": "AWS Lambda APIG proxy integration helper to send an HTTP response.",
+  "main": "src/index.js",
+  "files": [
+    "src/index.js"
+  ],
+  "scripts": {
+    "test": "jest",
+    "lint": "eslint src",
+    "lint:format": "npm run lint -- --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mooncake-dev/lambda-res-handler.git"
+  },
+  "keywords": [
+    "aws",
+    "lambda",
+    "response",
+    "json"
+  ],
+  "author": "Daniël Illouz <daniel.illouz@me.com> (https://www.danillouz.dev/)",
+  "contributors": [
+    "Daniël Illouz <daniel.illouz@me.com>",
+    "Dinos Theodorou <dinostheo@gmail.com>"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mooncake-dev/lambda-res-handler/issues"
+  },
+  "homepage": "https://github.com/mooncake-dev/lambda-res-handler#readme",
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.2.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "jest": "^24.7.1",
+    "prettier": "^1.17.0"
+  }
+}
