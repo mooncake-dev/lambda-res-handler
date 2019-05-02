@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * Creates a Function that can send an HTTP JSON response.
+ * Creates a Function that can send an HTTP JSON response and a Function that can render HTML.
  *
  * @param {Object} [defaultHeaders={}] - default HTTP response headers sent with every response
  *
@@ -28,6 +28,27 @@ module.exports = function createResHandler(defaultHeaders = {}) {
         },
         statusCode,
         body: JSON.stringify(body)
+      };
+    },
+
+    /**
+     * The function renders HTML by responding to the API Gateway with the HTML content in the body property.
+     *
+     * @param {Number} [statusCode=200] - HTTP response status code
+     * @param {Object} [body] - HTTP response body
+     * @param {Object} [headers={}] - HTTP reponse headers
+     *
+     * @returns {Object} Lambda HTTP response
+     */
+    html(statusCode = 200, body, headers = {}) {
+      return {
+        headers: {
+          ...defaultHeaders,
+          ...headers,
+          'Content-Type': 'text/html'
+        },
+        statusCode,
+        body
       };
     }
   };

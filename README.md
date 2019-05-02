@@ -32,9 +32,10 @@ Object `resHandlers`.
 
 This Object contains the following methods:
 
-| Name | Description                           |
-| ---- | ------------------------------------- |
-| json | Stringifies response payload as JSON. |
+| Name | Description                                                         |
+| ---- | ------------------------------------------------------------------- |
+| json | Stringifies response payload as JSON.                               |
+| html | Responds with html content and sets the proper content type headers |
 
 #### resHandlers.json(code, body, headers)
 
@@ -102,6 +103,80 @@ module.exports.sendData = async event => {
     };
 
     return sendRes.json(statusCode, data, { 'extra-header': 'kaput' });
+  }
+};
+```
+
+#### resHandlers.html(code, body, headers)
+
+**Parameters:**
+
+| Name    | Required | Type   | Description                                                                   |
+| ------- | -------- | ------ | ----------------------------------------------------------------------------- |
+| code    | No       | Number | A valid HTTP status code, which defaults to `200`.                            |
+| body    | No       | String | The payload to be returned as HTML.                                           |
+| headers | No       | Object | Any headers to send (in addition to the `defaultHeaders`) as key-value pairs. |
+
+**NOTE:**
+_Content-Type header is always set as text/html._
+_For working with this function you need to set the "Content-Type" API Gateway response headers to "text/html" as well, for the specific endpoint. Additionally you have to set a response template with value "$input.path('$')"._
+
+**Returns:**
+
+Object.
+
+This is an AWS Lambda conformant HTTP response Object:
+
+```
+{
+  headers: {},
+  statusCode: 200,
+  body: '<html><head><meta charset="utf-8" /></head><body><div>Hello World!</div></body></html>'
+}
+```
+
+## Usage
+
+```js
+const createResHandler = require('@mooncake-dev/lambda-res-handler');
+const sendRes = createResHandler();
+sendRes.html(
+  200,
+  '<html><head><meta charset="utf-8" /></head><body><div>Hello World!</div></body></html>'
+);
+```
+
+## Examples
+
+```js
+'use strict';
+
+const createResHandler = require('@mooncake-dev/lambda-res-handler');
+
+const sendRes = createResHandler();
+
+/**
+ * Lambda APIG proxy integration.
+ *
+ * @param {Object} event - HTTP input
+ *
+ * @return {Object} HTTP output
+ */
+module.exports.sendData = async event => {
+  try {
+    const message = 'Hello World';
+    const html = `<html><head><meta charset="utf-8" /></head><body><div>${message}</div></body></html>`;
+    return sendRes.html(200, html, { 'x-extra-header': true });
+  } catch (err) {
+    console.log('error: ', err); // eslint-disable-line no-console
+
+    const statusCode = err.statusCode || 500;
+
+    const html = `<html><head><meta charset="utf-8" /></head><body><div>${
+      err.message
+    }</div></body></html>`;
+
+    return sendRes.json(statusCode, html, { 'extra-header': 'kaput' });
   }
 };
 ```
