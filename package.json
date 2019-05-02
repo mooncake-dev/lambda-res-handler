@@ -1,6 +1,6 @@
 {
   "name": "@mooncake-dev/lambda-res-handler",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "AWS Lambda APIG proxy integration helper to send an HTTP response.",
   "main": "src/index.js",
   "files": [
